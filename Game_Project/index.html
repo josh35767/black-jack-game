@@ -4,14 +4,27 @@
     <meta charset="utf-8">
     <title> Game Project </title>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel='stylesheet' href='css/style.min.css'>
   </head>
   <body>
-    <div class = 'totalValue'></div>
-    <div class = 'status'></div>
-    <button id='hit-btn'> HIT ME </button>
+    <div class='card-table container'>
+      <div class='row card-hand'>
+        <div class='col-sm-2 aCard card-1 col-sm-offset-1'></div>
+        <div class='col-sm-2 aCard card-2'></div>
+        <div class='col-sm-2 aCard card-3'></div>
+        <div class='col-sm-2 aCard card-4'>hi</div>
+        <div class='col-sm-2 aCard card-5'>hi</div>
 
-    <div class = 'displayCards'></div>
+      </div>
+      <div class = 'totalValue'></div>
+      <div class = 'dealerValue'>Dealers Score: </div>
+      <div class = 'status'></div>
+      <button id='hit-btn'> HIT ME </button>
+      <button id='stand-btn'> STAND </button>
+
+      <div class = 'displayCards'></div>
+    </div>
     <script src='js/jquery-3.2.1.min.js'></script>
     <script src='js/black-jack.js'></script>
     <script src='js/app.js'></script>
