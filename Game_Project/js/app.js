@@ -16,13 +16,16 @@ $(document).ready (function(){
   // $('.winner-message').hide();
 
   $('#hit-btn').click(function (){
+    document.getElementById('audio').play();
     theGame.playerHit();
     theGame.player.checkStatus();
     theGame.player.showHand();
     theGame.dealer.showHand();
     if (theGame.player.totalPoints > 21) {
       $('.controls button').css('pointer-events', 'none');
+      theGame.player.chips -= 5;
       setTimeout(function () {
+        document.getElementById('loseAudio').play();
         $('.winner-message').html('<h1>You busted...<h1>');
         theGame.displayMessage();
       }, 1000);

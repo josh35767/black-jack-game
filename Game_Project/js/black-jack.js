@@ -6,7 +6,9 @@ function NewGame () {
 
 // DEALS OUT TWO CARDS INTO PLAYERS HANDS AND DISPLAYS IT
 NewGame.prototype.initialDeal = function () {
-  for (var i = 0; i < 2; i++) {
+
+
+  for ( i = 0; i < 2; i++) {
     var someCardPlayer = this.deck.randomCard();
     var someCardDealer = this.deck.randomCard();
     if (someCardPlayer.faceValue === 'A') {
@@ -51,10 +53,18 @@ NewGame.prototype.dealerHit = function () {
 // Checks is the Dealer has a higher score than the player
 NewGame.prototype.checkWinner = function () {
   if (this.player.totalPoints >= this.dealer.totalPoints || this.dealer.totalPoints > 21 ) {
-    return 'You win!';
+    setTimeout(function (){
+        document.getElementById('winAudio').play();
+    }, 1000);
+    this.player.chips += 5;
+    return 'You win the round.';
   }
   else {
-    return 'You lose...';
+    setTimeout(function (){
+        document.getElementById('loseAudio').play();
+    }, 1000);
+    this.player.chips -= 5;
+    return 'You lose the round.';
   }
 };
 
@@ -70,9 +80,27 @@ NewGame.prototype.start = function() {
 
 // Resets Game
 NewGame.prototype.reset = function (){
-  this.player = new Person ();
+  this.player.totalPoints = 0;
+  this.player.hand = [];
+  this.player.status = 'Hit or Stand?';
+  this.player.totalPoints = 0;
+  this.player.aces = 0;
   this.dealer = new Dealer ();
   this.deck = new CardDeck ();
+  if (this.player.chips >= 100) {
+    $('.winner-message').html('<h1>Congratulations! <br> You beat the dealer.<br> Resetting the game! <h1>');
+    this.displayMessage();
+    setTimeout(function(){
+        location.reload();
+    },2000);
+  }
+  else if (this.player.chips <= 0) {
+    $('.winner-message').html('<h1>Sorry <br> You\'re out of chips <br> Resetting the game! <h1>');
+    this.displayMessage();
+    setTimeout(function(){
+        location.reload();
+    },2000);
+  }
   $('.aCard').css('margin-left', '0');
   $('.card-1').css('margin-left', '0');
   $('.aCard').removeClass('overlap');
@@ -169,6 +197,7 @@ Player.prototype.checkAces = function (){
 // PERSON IS THE PERSON PLAYING THE GAME
 function Person () {
   Player.call(this);
+  this.chips = 50;
  }
 
 //INHERITS FROM PLAYER
@@ -196,6 +225,7 @@ Person.prototype.showHand = function () {
       '</span><br><span class="valuePic">' + card.faceValue +
       '</span><br><span class="suitPic">&' + card.cardSuit + ';');
     });
+    $('#chips').html('Chips: ' + this.chips);
     $('.totalValue').html('Total Value: ' + this.totalPoints);
     $('.status').html(this.status);
     cardPosition = 0;
