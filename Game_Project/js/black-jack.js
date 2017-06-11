@@ -4,10 +4,87 @@ function NewGame () {
   this.dealer = new Dealer ();
 }
 
+// DEALS OUT TWO CARDS INTO PLAYERS HANDS AND DISPLAYS IT
+NewGame.prototype.initialDeal = function () {
+  for (var i = 0; i < 2; i++) {
+    var someCardPlayer = this.deck.randomCard();
+    var someCardDealer = this.deck.randomCard();
+    if (someCardPlayer.faceValue === 'A') {
+      this.player.aces += 1;
+    }
+    if (someCardDealer.faceValue === 'A') {
+      this.dealer.aces += 1;
+    }
+    this.player.totalPoints += someCardPlayer.pointValue;
+    this.player.hand.push(someCardPlayer);
+    this.dealer.totalPoints += someCardDealer.pointValue;
+    this.dealer.hand.push(someCardDealer);
+  }
+};
+
+//Adds a card to the players hands
+
+NewGame.prototype.playerHit = function () {
+    var someCard2 = this.deck.randomCard();
+    if (someCard2.faceValue === 'A') {
+      this.player.aces += 1;
+    }
+    this.player.totalPoints += someCard2.pointValue;
+    this.player.hand.push(someCard2);
+    this.player.checkAces();
+    theGame.player.checkStatus();
+    theGame.player.showHand();
+};
+
+//ADDS A CARD TO THE DEALERS HAND
+NewGame.prototype.dealerHit = function () {
+  var someCard2 = this.deck.randomCard();
+  if (someCard2.faceValue === 'A') {
+    this.dealer.aces += 1;
+  }
+  this.dealer.totalPoints += someCard2.pointValue;
+  this.dealer.hand.push(someCard2);
+  this.dealer.checkAces();
+
+};
+
+// Checks is the Dealer has a higher score than the player
+NewGame.prototype.checkWinner = function () {
+  if (this.player.totalPoints >= this.dealer.totalPoints || this.dealer.totalPoints > 21 ) {
+    return 'You win!';
+  }
+  else {
+    return 'You lose...';
+  }
+};
+
+// Starts New Game
+NewGame.prototype.start = function() {
+  this.initialDeal();
+  this.player.checkStatus();
+  this.player.showHand();
+  this.dealer.showHand();
+};
+
+// Resets Game
+NewGame.prototype.reset = function (){
+  this.player = new Person ();
+  this.dealer = new Dealer ();
+  this.deck = new CardDeck ();
+  $('.aCard').css('margin-left', '0');
+  $('.card-1').css('margin-left', '0');
+  $('.aCard').removeClass('overlap');
+  $('.aCard').removeClass('red');
+  $('.card2-1').removeClass('flippedOver');
+};
+
+// ---------------------------------------
+
 // CONSTRUCTOR FUNCTION FOR EACH SUIT
-function SuitObject (suitName) {
+function SuitObject (suitName, color) {
   this.suit = suitName;
   this.values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+  this.color = color;
 }
 
 // TAKES A RANDOM VALUE FROM A SUIT AND RETURNS IT, WHILE REMOVING IT FROM THE ARRAY
@@ -18,12 +95,22 @@ SuitObject.prototype.randomValue = function () {
 
 // CONSTRUCTOR FUNCTION FOR A CARD DECK
 function CardDeck () {
-  var clubsArray = new SuitObject ("clubs");
-  var heartsArray = new SuitObject ("hearts");
-  var diamondsArray = new SuitObject ("diamonds");
-  var spadesArray = new SuitObject ("spades");
+  var clubsArray = new SuitObject ("clubs", "black");
+  var heartsArray = new SuitObject ("hearts", "red");
+  var diamondsArray = new SuitObject ("diams", "red");
+  var spadesArray = new SuitObject ("spades", "black");
   this.suits = [clubsArray, heartsArray, diamondsArray, spadesArray];
 }
+//TAKES A RANDOM SUIT, AND GETS A RANDOM VALUE FROM THE SUIT (SELECTING RANDOM CARD)
+CardDeck.prototype.randomCard = function() {
+  var randomIndex2 = Math.floor(Math.random() * this.suits.length);
+  var randomCardValue = this.suits[randomIndex2].randomValue();
+  var suitValue = this.suits[randomIndex2].suit;
+  if (this.suits[randomIndex2].values.length <= 0) {  // Challenge? Splicing BEFORE returning
+    this.suits.splice(randomIndex2, 1);
+  }
+  return new SingleCard(suitValue, randomCardValue, checkPointValue(randomCardValue));
+};
 // CREATES A CARD WITH THE GIVEN PARAMETERS, ALLOWS FOR EASY MANIPULATION
 function SingleCard (suit, faceValue, pointValue) {
   this.cardSuit = suit;
@@ -43,16 +130,9 @@ function checkPointValue (value) {
     return Number(value);
   }
 }
-//TAKES A RANDOM SUIT, AND GETS A RANDOM VALUE FROM THE SUIT (SELECTING RANDOM CARD)
-CardDeck.prototype.randomCard = function() {
-  var randomIndex2 = Math.floor(Math.random() * this.suits.length);
-  var randomCardValue = this.suits[randomIndex2].randomValue();
-  var suitValue = this.suits[randomIndex2].suit;
-  if (this.suits[randomIndex2].values.length <= 0) {  // Challenge? Splicing BEFORE returning
-    this.suits.splice(randomIndex2, 1);
-  }
-  return new SingleCard(suitValue, randomCardValue, checkPointValue(randomCardValue));
-};
+
+// --------------------------------
+
 //KEEPS TRACK OF THE PLAYERS POINTS AND CARDS IN HAND
 
 function Player () {
@@ -60,53 +140,8 @@ function Player () {
   this.hand = [];
   this.status = 'Hit or Stand?';
   this.game = theGame;
+  this.aces = 0;
 }
-
-// PERSON IS THE PERSON PLAYING THE GAME
-function Person () {
-  Player.call(this);
- }
-
-//INHERITS FROM PLAYER
-Person.prototype = Object.create(Player.prototype);
-
-function Dealer () {
-  Player.call(this);
-}
-
-Dealer.prototype = Object.create(Player.prototype);
-
-Dealer.prototype.playTurn = function() {
-  while (this.totalPoints < 17) {
-    theGame.dealerHit();
-  }
-};
-
-// DEALS OUT TWO CARDS INTO PLAYERS HANDS AND DISPLAYS IT
-NewGame.prototype.initialDeal = function () {
-  for (var i = 0; i < 2; i++) {
-    var someCard = this.deck.randomCard();
-    var someCard3 = this.deck.randomCard();
-    this.player.totalPoints += someCard.pointValue;
-      this.player.hand.push(someCard);
-      this.dealer.totalPoints += someCard3.pointValue;
-        this.dealer.hand.push(someCard3);
-  }
-};
-
-//Adds a card to the players hands
-
-NewGame.prototype.playerHit = function () {
-    var someCard2 = this.deck.randomCard();
-    this.player.totalPoints += someCard2.pointValue;
-    this.player.hand.push(someCard2);
-};
-
-NewGame.prototype.dealerHit = function () {
-  var someCard2 = this.deck.randomCard();
-  this.dealer.totalPoints += someCard2.pointValue;
-  this.dealer.hand.push(someCard2);
-};
 //Makes message for player
 Player.prototype.checkStatus = function(){
   if (this.totalPoints > 21) {
@@ -119,46 +154,82 @@ Player.prototype.checkStatus = function(){
     this.status = 'Hit or Stand?';
   }
 };
+//Checks for aces and makes them one if goint to bust,
+Player.prototype.checkAces = function (){
+  if(this.totalPoints > 21 && this.aces > 0) {
+    this.totalPoints -= 10;
+    this.aces -= 1;
+  }
+};
+
+// PERSON IS THE PERSON PLAYING THE GAME
+function Person () {
+  Player.call(this);
+ }
+
+//INHERITS FROM PLAYER
+Person.prototype = Object.create(Player.prototype);
 
 var cardPosition = 0;
 // Displays INFO
 Person.prototype.showHand = function () {
-  $('.aCard').html('');
-  $('.aCard').hide();
+  $('.card-hand .aCard').html('');
+  $('.card-hand .aCard').hide();
   this.hand.forEach(function (card) {
     cardPosition += 1;
+    if (cardPosition > 3) {
+      $('.card-hand .aCard').css('margin-left', '-100px');
+      $('.card-1').css('margin-left', '50px');
+      $('.card-hand .aCard').addClass('overlap');
+      $('.card-'+cardPosition).removeClass('overlap');
+    }
+    if (card.cardSuit === 'diams' || card.cardSuit === 'hearts'){
+      $('.card-'+cardPosition).addClass('red');
+    }
       $('.card-'+cardPosition).show();
       $('.card-'+cardPosition).append(
-      '<span><h5> Card Suit: </h5>' + card.cardSuit +
-      '</span><span><h5>Face Value: </h5>' + card.faceValue +
-      '</span><span><h5>Point Value: </h5>' + card.pointValue + '</span><br>');
+      '<span class="suitPic">&' + card.cardSuit + ';' +
+      '</span><br><span class="valuePic">' + card.faceValue +
+      '</span><br><span class="suitPic">&' + card.cardSuit + ';');
     });
-    $('.totalValue').html('<h3>Total Value: ' + this.totalPoints + '</h3>');
+    $('.totalValue').html('Total Value: ' + this.totalPoints);
     $('.status').html(this.status);
     cardPosition = 0;
 };
 
+// CREATES A DEALER
+function Dealer () {
+  Player.call(this);
+}
 
-// Checks is the Dealer has a higher score than the player
-NewGame.prototype.checkWinner = function () {
-  if (this.player.totalPoints >= this.dealer.totalPoints || this.dealer.totalPoints >= 21 ) {
-    return 'You win!';
-  }
-  else {
-    return 'You lose...';
+Dealer.prototype = Object.create(Player.prototype);
+//DEALER MUST HIT UNTIL HIS HAND VALUE IS 17 OR HIGHER, THEN STAYS
+Dealer.prototype.playTurn = function() {
+  while (this.totalPoints < 17) {
+    theGame.dealerHit();
   }
 };
 
-// Starts New Game
-NewGame.prototype.start = function() {
-  this.initialDeal();
-  this.player.checkStatus();
-  this.player.showHand();
-};
-
-// Resets Game
-NewGame.prototype.reset = function (){
-  this.player = new Person ();
-  this.dealer = new Dealer ();
-  this.deck = new CardDeck ();
+Dealer.prototype.showHand = function() {
+  $('.card-hand-2 .aCard').html('');
+  $('.card-hand-2 .aCard').hide();
+  this.hand.forEach(function (card) {
+    cardPosition += 1;
+    $('.card2-1').addClass('flippedOver');
+    if (cardPosition > 3) {
+      $('.card-hand-2 .aCard').css('margin-left', '-100px');
+      $('.card2-1').css('margin-left', '50px');
+      $('.card-hand-2 .aCard').addClass('overlap');
+      $('.card2-'+cardPosition).removeClass('overlap');
+    }
+    if (card.cardSuit === 'diams' || card.cardSuit === 'hearts'){
+      $('.card2-'+cardPosition).addClass('red');
+    }
+      $('.card2-'+cardPosition).show();
+      $('.card2-'+cardPosition).append(
+      '<span class="suitPic">&' + card.cardSuit + ';' +
+      '</span><br><span class="valuePic">' + card.faceValue +
+      '</span><br><span class="suitPic">&' + card.cardSuit + ';');
+    });
+    cardPosition = 0;
 };
