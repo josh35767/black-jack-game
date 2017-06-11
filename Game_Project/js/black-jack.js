@@ -61,6 +61,8 @@ NewGame.prototype.checkWinner = function () {
 // Starts New Game
 NewGame.prototype.start = function() {
   this.initialDeal();
+  this.player.checkAces();
+  this.dealer.checkAces();
   this.player.checkStatus();
   this.player.showHand();
   this.dealer.showHand();
@@ -75,7 +77,9 @@ NewGame.prototype.reset = function (){
   $('.card-1').css('margin-left', '0');
   $('.aCard').removeClass('overlap');
   $('.aCard').removeClass('red');
+  $('.menu').removeClass('start-menu');
   $('.card2-1').removeClass('flippedOver');
+  $('.controls button').css('pointer-events', 'auto');
 };
 
 // ---------------------------------------
@@ -232,4 +236,19 @@ Dealer.prototype.showHand = function() {
       '</span><br><span class="suitPic">&' + card.cardSuit + ';');
     });
     cardPosition = 0;
+};
+
+NewGame.prototype.displayMessage = function () {
+  $('.wrap').addClass('overlay');
+  $('.card-table').hide();
+  $('.winner-message').show();
+  setTimeout (function (){
+      $('.card-table').show();
+    $('.wrap').removeClass('overlay');
+    $('.winner-message').hide();
+
+    theGame.reset ();
+    theGame.start ();
+  }, 2000);
+
 };

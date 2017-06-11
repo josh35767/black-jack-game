@@ -1,8 +1,19 @@
 var theGame = new NewGame();
 
 $(document).ready (function(){
+  $('.wrap').hide();
+  $('.card-table').hide();
+  $('#play-button').click(function(){
+    $('.wrap').show();
+    $('.card-table').show();
+    $('.menu-text').hide();
+    theGame.start();
+  });
 
-  theGame.start();
+
+
+  // $('.wrap').removeClass('overlay');
+  // $('.winner-message').hide();
 
   $('#hit-btn').click(function (){
     theGame.playerHit();
@@ -10,11 +21,12 @@ $(document).ready (function(){
     theGame.player.showHand();
     theGame.dealer.showHand();
     if (theGame.player.totalPoints > 21) {
-      setTimeout(function (){
-        alert('You lose');
-        theGame.reset ();
-        theGame.start ();
-      }, 500);
+      $('.controls button').css('pointer-events', 'none');
+      setTimeout(function () {
+        $('.winner-message').html('<h1>You busted...<h1>');
+        theGame.displayMessage();
+      }, 1000);
+
     }
 
 
@@ -25,15 +37,14 @@ $(document).ready (function(){
     theGame.player.checkStatus();
     theGame.dealer.showHand();
     $('.card2-1').removeClass('flippedOver');
-    setTimeout(function () {
-    alert(theGame.checkWinner()+' DealerScore: ' + theGame.dealer.totalPoints);
+    $('.controls button').css('pointer-events', 'none');
+    $('.winner-message').html('<h1>' + theGame.checkWinner()+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
+    setTimeout(function(){
+      theGame.displayMessage();
+    }, 1000);
 
-    theGame.reset ();
-    theGame.start ();
-    $('.dealerValue').html(theGame.dealer.totalPoints);
-  }, 2000); // -REMOVE DEALERS SCORE
-    });
-  $('.dealerValue').html(theGame.dealer.totalPoints); // -REMOVE DEALERS SCORE
+
+  });
 
 
 });
