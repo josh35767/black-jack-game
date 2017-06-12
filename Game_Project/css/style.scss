@@ -1,6 +1,6 @@
 html, body {
   background-color: black;
-  user-select: none; //Disables text highlight
+ //Disables text highlight
   margin: 0;
   padding: 0;
   font-size: 15px;
@@ -30,7 +30,7 @@ html, body {
   }
 }
 
-.menu-text {
+.menu-text, .instruction-container {
   background-color: white;
   position: absolute;
   padding: 25px;
@@ -54,6 +54,16 @@ html, body {
     font-size: 40px;
   }
 }
+
+.instruction-container {
+  display: none;
+  h1 {
+    font-size: 3em;
+  }
+  button {
+    font-size: 20px;
+  }
+}
 .card-table {
   background-image: url('../img/felt.jpg');
   background-position: center center;
@@ -74,6 +84,7 @@ html, body {
   border-bottom-left-radius: 300px;
   border-bottom-right-radius: 300px;
   width: 90%;
+  max-width: 1500px;
   margin: 0 auto;
   height: 700px;
 }
@@ -125,6 +136,7 @@ span {
 }
 
 .aCard {
+  color: black;
   display: inline-block;
   background-color: white;
   border: 1.5px solid black;
@@ -194,8 +206,8 @@ span {
   position: absolute;
   width: 200px;
   height: 200px;
-  bottom: 15%;
-  right: 8%;
+  top: 20%;
+  left: 7%;
   p {
     font-family:'Cinzel', serif;
     font-size: 1.5rem;
@@ -214,8 +226,8 @@ span {
 }
 
 .overlay {
-
   background-color: rgba(0, 0, 0, 1);
+
 }
 
 .winBackground {
@@ -251,13 +263,33 @@ span {
   color: #197228;
 }
 
-
+#mute {
+  position: absolute;
+  right: 5%;
+  top: 3%;
+  color: white;
+  padding: 0.5%;
+  font-size: 1.5em;
+  border: 2px outset black;
+  border-radius: 5px;
+  background-image: linear-gradient(#a80101, #ef4a4a);
+}
 @media (max-width: 1200px) {
   html, body {
     font-size: 12px;
   }
 }
 
-.overlay, .start-menu .card-table {
-
+@media(max-width: 920px) {
+  html, body {
+    font-size: 10px;
+  }
+  .aCard {
+    width: 10%;
+    height: 15%;
+  }
+  #chips {
+    width: 150px;
+    height: 150px;
+  }
 }

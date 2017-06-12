@@ -93,6 +93,36 @@ NewGame.prototype.start = function() {
   this.player.checkStatus();
   this.player.showHand();
   this.dealer.showHand();
+  this.checkBlackJack();
+};
+
+NewGame.prototype.checkBlackJack = function () {
+  if (this.player.totalPoints === 21) {
+    setTimeout(function (){
+        document.getElementById('winAudio').play();
+    }, 2000);
+    this.player.chips += 5;
+    $('.controls button').css('pointer-events', 'none');
+    $('.winner-message').html('<h1>Black Jack! You win the round!</h1>');
+    setTimeout(function(){
+      theGame.displayMessage();
+    }, 2000);
+  }
+  else if(this.dealer.totalPoints === 21) {
+    setTimeout(function (){
+        $('.card2-1').removeClass('flippedOver');
+    },1000);
+
+    setTimeout(function (){
+        document.getElementById('loseAudio').play();
+    }, 3000);
+    this.player.chips -= 5;
+    $('.controls button').css('pointer-events', 'none');
+    $('.winner-message').html('<h1>Dealer\'s got a Black Jack... </br> Sorry </h1>');
+    setTimeout(function(){
+      theGame.displayMessage();
+    }, 3000);
+  }
 };
 
 NewGame.prototype.checkGameOver = function () {
@@ -104,7 +134,7 @@ NewGame.prototype.checkGameOver = function () {
     this.displayMessage();
     setTimeout(function(){
         location.reload();
-    },5000);
+    },7000);
   }
   else if (this.player.chips <= 0) {
       document.getElementById("loopSong").pause();
@@ -265,16 +295,16 @@ Person.prototype.showHand = function () {
     if (card.cardSuit === 'diams' || card.cardSuit === 'hearts'){
       $('.card-'+cardPosition).addClass('red');
     }
-      $('.card-'+cardPosition).show();
-      $('.card-'+cardPosition).append(
-      '<span class="suitPic">&' + card.cardSuit + ';' +
-      '</span><br><span class="valuePic">' + card.faceValue +
-      '</span><br><span class="suitPic">&' + card.cardSuit + ';');
+    $('.card-'+cardPosition).append(
+    '<span class="suitPic">&' + card.cardSuit + ';' +
+    '</span><br><span class="valuePic">' + card.faceValue +
+    '</span><br><span class="suitPic">&' + card.cardSuit + ';');
+    $('.card-'+cardPosition).show();
     });
-    $('#chips').html('<p>Chips:<br> ' + '$' + this.chips + '</p>');
-    $('.totalValue').html('Total Value: ' + this.totalPoints);
-    $('.status').html(this.status);
-    cardPosition = 0;
+  $('#chips').html('<p>Chips:<br> ' + '$' + this.chips + '</p>');
+  $('.totalValue').html('Total Value: ' + this.totalPoints);
+  $('.status').html(this.status);
+  cardPosition = 0;
 };
 
 // CREATES A DEALER
@@ -313,3 +343,16 @@ Dealer.prototype.showHand = function() {
     });
     cardPosition = 0;
 };
+// Array for the instruction text
+var instructions = [
+  "Welcome to Black Jack, for those who don't know how to play, the rules are simple.",
+  "Your goal is to get more points than the dealer, however, if your hand value reaches over 21, you're out.",
+  "Each card is worth its numerical value, face cards are worth 10, and aces are worth 11 or 1.",
+  "Each round you are dealt 2 cards and given a choice to hit or stand. Hitting will give you another card, standing ends your turn.",
+  "If you start the round with 21, you get a 'Black Jack' and automatically win the round. However, if you don't have one, and the dealer does, he automatically wins. ",
+  "Another option is after the initial deal is to Double Down, you will be given one more card, and you will immediately end your turn. Your bet, however is doubled.",
+  "At the end of each turn your hand will be compared with the dealers, if the dealer's hand is higher, you lose your bet.",
+  "On normal plays, you automatically bet $5, double downs will double your bet, but it's a riskier move.",
+  "The goal is to get to $100 in chips, reach 0 and game over.",
+  "Good luck!"
+];

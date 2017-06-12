@@ -15,18 +15,15 @@
         <div class='menu-text'>
 
           <h1>Black Jack </h1>
-          <button id='play-button'> Play </button>
-          <div class='instructions'>
-            <h3> Instructions </h3>
-            <ol>
-              <li>You are dealt a hand, each card worth their face values, <br>face cards worth, 10, and aces worth 1 or 11.</li>
-              <li>Your goal is to have a higher hand than the dealer,<br> but if you get over 21, you automatically lose.</li>
-              <li>Each round you bet 5 chips, winning will double your bet.</li>
-              <li>You are given to choices, 'hit' or 'stand' <br> Hitting will giving you a card, standing will end your turn.</li>
-              <li>You may 'double down', you double your bet and <br> you will draw a single card and be forced to stand. </li>
-              <li>Once you reach 100 chips you win, reach 0 chips, and game over.</li>
-            </ol>
-          </div>
+          <button id='play-button'> Play </button><br>
+          <button id='instructions'> Instructions </button>
+        </div>
+        <div class='instruction-container'>
+          <h1> Instructions </h1>
+          <h2 class='current-text'></h2>
+          <button id='back'>Back</button>
+          <button id='next'>Next</button><br>
+          <button id='menu'>Back to Menu</button>
         </div>
     <div class='wrap overlay'>
       <div class='winner-message'>
@@ -80,11 +77,16 @@
       </section>
 
       <div id='chips'> <p>Chips:<br>50<p></div>
+
+      <button id='mute'>Toggle Music</button>
     </div>
   </div>
 
      </div>
    </div>
+   <figcaption>Music from: https://www.freesound.org/s/346842</figcaption>
+
+     <audio id="instLoop" src="sounds/OpeningMusic.wav"></audio>
      <audio id="loopSong" src="sounds/loopMusic.mp3"></audio>
      <audio id="gameOver" src="sounds/gameOver.wav"></audio>
      <audio id="gameWin" src="sounds/endWin.mp3"></audio>
@@ -92,6 +94,7 @@
      <audio id="loseAudio" src="sounds/lose.wav"></audio>
      <audio id="audio" src="sounds/cardSound.wav"></audio>
      <audio id="winAudio" src="sounds/win.wav"></audio>
+
     <script src='js/jquery-3.2.1.min.js'></script>
     <script src='js/black-jack.js'></script>
     <script src='js/app.js'></script>
