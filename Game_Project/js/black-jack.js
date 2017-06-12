@@ -97,6 +97,7 @@ NewGame.prototype.start = function() {
 
 NewGame.prototype.checkGameOver = function () {
   if (this.player.chips >= 100) {
+    document.getElementById("loopSong").pause();
     document.getElementById('gameWin').play();
     $('.winner-message').html('<h1 class="winnerText">Congratulations! <br> You beat the dealer.<br> Resetting the game! <h1>');
     $('.wrap').addClass('winBackground');
@@ -106,6 +107,7 @@ NewGame.prototype.checkGameOver = function () {
     },5000);
   }
   else if (this.player.chips <= 0) {
+      document.getElementById("loopSong").pause();
     document.getElementById('gameOver').play();
     $('.winner-message').html('<h1>Sorry <br> You\'re out of chips <br> Resetting the game! <h1>');
     this.displayMessage();

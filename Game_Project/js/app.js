@@ -2,6 +2,8 @@ var theGame = new NewGame();
 
 $(document).ready (function(){
   $('#play-button').click(function(){
+    document.getElementById("loopSong").loop = true;
+    document.getElementById("loopSong").play();
     document.getElementById('startShuffle').play();
     $('.winner-message').show();
     $('.menu-text').hide();
