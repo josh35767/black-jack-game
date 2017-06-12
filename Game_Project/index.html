@@ -23,6 +23,7 @@
               <li>Your goal is to have a higher hand than the dealer,<br> but if you get over 21, you automatically lose.</li>
               <li>Each round you bet 5 chips, winning will double your bet.</li>
               <li>You are given to choices, 'hit' or 'stand' <br> Hitting will giving you a card, standing will end your turn.</li>
+              <li>You may 'double down', you double your bet and <br> you will draw a single card and be forced to stand. </li>
               <li>Once you reach 100 chips you win, reach 0 chips, and game over.</li>
             </ol>
           </div>
@@ -30,6 +31,7 @@
     <div class='wrap overlay'>
       <div class='winner-message'>
         <h1> You win! </h1>
+
       </div>
 
 
@@ -69,12 +71,15 @@
 
 
       <section class='controls'>
-        <h2 id='chips'></h2>
         <div class = 'totalValue'> </div>
         <div class = 'status'></div>
         <button id='hit-btn'> HIT ME </button><br>
+        <button id='double-btn'> DOUBLE DOWN </button><br>
         <button id='stand-btn'> STAND </button>
+
       </section>
+
+      <div id='chips'> <p>Chips:<br>50<p></div>
     </div>
   </div>
 

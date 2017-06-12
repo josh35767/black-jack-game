@@ -49,6 +49,23 @@ NewGame.prototype.dealerHit = function () {
   this.dealer.checkAces();
 
 };
+// DOUBLE DOWN FUNCTION
+NewGame.prototype.doubleDown = function () {
+  if (this.player.totalPoints >= this.dealer.totalPoints || this.dealer.totalPoints > 21 ) {
+    setTimeout(function (){
+        document.getElementById('winAudio').play();
+    }, 1000);
+    this.player.chips += 10;
+    return 'You win the round.';
+  }
+  else {
+    setTimeout(function (){
+        document.getElementById('loseAudio').play();
+    }, 1000);
+    this.player.chips -= 10;
+    return 'You lose the round.';
+  }
+};
 
 // Checks is the Dealer has a higher score than the player
 NewGame.prototype.checkWinner = function () {
@@ -98,6 +115,7 @@ NewGame.prototype.checkGameOver = function () {
   }
 };
 
+
 // Resets Game
 NewGame.prototype.reset = function (){
   this.player.totalPoints = 0;
@@ -108,6 +126,7 @@ NewGame.prototype.reset = function (){
   this.dealer = new Dealer ();
   this.deck = new CardDeck ();
   this.checkGameOver();
+  $('#double-btn').css('visibility', 'visible');
   $('.aCard').css('margin-left', '0');
   $('.card-1').css('margin-left', '0');
   $('.aCard').removeClass('overlap');
@@ -115,6 +134,24 @@ NewGame.prototype.reset = function (){
   $('.menu').removeClass('start-menu');
   $('.card2-1').removeClass('flippedOver');
   $('.controls button').css('pointer-events', 'auto');
+};
+
+
+NewGame.prototype.displayMessage = function () {
+  $('.wrap').addClass('overlay');
+  $('.card-table').hide();
+  $('.card-table-edge').hide();
+  $('.winner-message').show();
+  setTimeout (function (){
+      $('.card-table').show();
+      $('.card-table-edge').show();
+    $('.wrap').removeClass('overlay');
+    $('.winner-message').hide();
+
+    theGame.reset ();
+    theGame.start ();
+  }, 2000);
+
 };
 
 // ---------------------------------------
@@ -232,7 +269,7 @@ Person.prototype.showHand = function () {
       '</span><br><span class="valuePic">' + card.faceValue +
       '</span><br><span class="suitPic">&' + card.cardSuit + ';');
     });
-    $('#chips').html('Chips: ' + this.chips);
+    $('#chips').html('<p>Chips:<br> ' + '$' + this.chips + '</p>');
     $('.totalValue').html('Total Value: ' + this.totalPoints);
     $('.status').html(this.status);
     cardPosition = 0;
@@ -273,21 +310,4 @@ Dealer.prototype.showHand = function() {
       '</span><br><span class="suitPic">&' + card.cardSuit + ';');
     });
     cardPosition = 0;
-};
-
-NewGame.prototype.displayMessage = function () {
-  $('.wrap').addClass('overlay');
-  $('.card-table').hide();
-  $('.card-table-edge').hide();
-  $('.winner-message').show();
-  setTimeout (function (){
-      $('.card-table').show();
-      $('.card-table-edge').show();
-    $('.wrap').removeClass('overlay');
-    $('.winner-message').hide();
-
-    theGame.reset ();
-    theGame.start ();
-  }, 2000);
-
 };
