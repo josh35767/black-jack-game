@@ -78,6 +78,26 @@ NewGame.prototype.start = function() {
   this.dealer.showHand();
 };
 
+NewGame.prototype.checkGameOver = function () {
+  if (this.player.chips >= 100) {
+    document.getElementById('gameWin').play();
+    $('.winner-message').html('<h1 class="winnerText">Congratulations! <br> You beat the dealer.<br> Resetting the game! <h1>');
+    $('.wrap').addClass('winBackground');
+    this.displayMessage();
+    setTimeout(function(){
+        location.reload();
+    },5000);
+  }
+  else if (this.player.chips <= 0) {
+    document.getElementById('gameOver').play();
+    $('.winner-message').html('<h1>Sorry <br> You\'re out of chips <br> Resetting the game! <h1>');
+    this.displayMessage();
+    setTimeout(function(){
+        location.reload();
+    },5000);
+  }
+};
+
 // Resets Game
 NewGame.prototype.reset = function (){
   this.player.totalPoints = 0;
@@ -87,20 +107,7 @@ NewGame.prototype.reset = function (){
   this.player.aces = 0;
   this.dealer = new Dealer ();
   this.deck = new CardDeck ();
-  if (this.player.chips >= 100) {
-    $('.winner-message').html('<h1>Congratulations! <br> You beat the dealer.<br> Resetting the game! <h1>');
-    this.displayMessage();
-    setTimeout(function(){
-        location.reload();
-    },2000);
-  }
-  else if (this.player.chips <= 0) {
-    $('.winner-message').html('<h1>Sorry <br> You\'re out of chips <br> Resetting the game! <h1>');
-    this.displayMessage();
-    setTimeout(function(){
-        location.reload();
-    },2000);
-  }
+  this.checkGameOver();
   $('.aCard').css('margin-left', '0');
   $('.card-1').css('margin-left', '0');
   $('.aCard').removeClass('overlap');
@@ -271,9 +278,11 @@ Dealer.prototype.showHand = function() {
 NewGame.prototype.displayMessage = function () {
   $('.wrap').addClass('overlay');
   $('.card-table').hide();
+  $('.card-table-edge').hide();
   $('.winner-message').show();
   setTimeout (function (){
       $('.card-table').show();
+      $('.card-table-edge').show();
     $('.wrap').removeClass('overlay');
     $('.winner-message').hide();
 

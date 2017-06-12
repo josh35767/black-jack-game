@@ -2,20 +2,32 @@ html, body {
   background-color: black;
   user-select: none; //Disables text highlight
   margin: 0;
-  width: 100%;
-  height: 100%;
   padding: 0;
   font-size: 15px;
+  border: 0;
 }
 
 .start-menu {
   position: relative;
   text-align: center;
-  width: 85%;
+  width: 100%;
   margin: 0 auto;
   height: 650px;
   background-image: url('../img/cardbackground.jpg');
   background-size: cover;
+  h3 {
+    text-decoration: underline;
+  }
+  .instructions {
+    border: 2px solid black;
+  }
+  ol {
+    text-align: left;
+    font-size: 1.2em;
+  }
+  li {
+    margin-top: 5px;
+  }
 }
 
 .menu-text {
@@ -29,11 +41,12 @@ html, body {
   border-radius: 8px;
   h1 {
     font-family: 'Cinzel', serif;
+    margin-top: 0;
     font-size: 70px;
   }
   button {
     background-image: linear-gradient(#0c37b7, #3358bf);
-    margin-top: 30px;
+    margin: 7px 0;
     padding: 0 40px;
     color: white;
     border: 4px outset #333333;
@@ -47,7 +60,19 @@ html, body {
   padding: 0;
   width: 90%;
   height: 650px;
+  border: 3px solid black;
+  border-bottom-left-radius: 300px;
+  border-bottom-right-radius: 300px;
 
+}
+
+.card-table-edge {
+  background-image: url('../img/wood.jpg');
+  background-size: cover;
+  border-bottom-left-radius: 300px;
+  border-bottom-right-radius: 300px;
+  width: 95%;
+  height: 700px;
 }
 
 h5 {
@@ -72,6 +97,10 @@ span {
   text-align: center;
   bottom: 5%;
   h1 {
+    border: 2px solid black;
+    display: inline-block;
+    padding: 5px 20px;
+    background-image: linear-gradient(#5E0D95, #752DA5);
     color: white;
     margin-bottom: -20px;
   }
@@ -83,6 +112,10 @@ span {
   text-align: center;
   top: 5%;
   h1 {
+    border: 2px solid black;
+    display: inline-block;
+    padding: 5px 20px;
+    background-image: linear-gradient(#5E0D95, #752DA5);
     color: white;
     margin-top: -20px;
   }
@@ -91,9 +124,9 @@ span {
 .aCard {
   display: inline-block;
   background-color: white;
-  border: 3px solid black;
-  border-radius: 7px;
-  width: 15%;
+  border: 1px solid black;
+  border-radius: 5px;
+  width: 13%;
   min-width: 150px;
   height: 20%;
 }
@@ -120,28 +153,29 @@ span {
   }
 }
 
+
 .controls {
   display: inline-block;
   color: white;
   padding: 1.5%;
-  background-image: linear-gradient(#8e8e8e, #4c4c4c);
+  background-image: linear-gradient(#000000, #1E1E1E);
   position: absolute;
   text-align: center;
   bottom: 5%;
   left: 5%;
   line-height: 1;
-  border: 4px inset grey;
+  border: 4px inset white;
 
   div {
     font-size: 1.8em;
     margin: 5px 0;
   }
   button {
-    border: 2px outset grey;
+    border: 2px outset white;
     margin: 10px 0;
     padding: 5px 10px;
     font-size: 1.5em;
-    background-image: linear-gradient(#f70000, #f43d3d);
+    background-image: linear-gradient(#5E0D95, #752DA5);
 
   }
 
@@ -157,12 +191,21 @@ span {
 }
 
 .overlay {
+
+  background-color: rgba(0, 0, 0, 1);
+}
+
+.winBackground {
+  background-image: url('../img/winImg.jpg');
+  background-size: cover;
+}
+
+.wrap  {
   box-sizing: border-box;
   margin: 0 auto;
   padding: 0;
   width: 100%;
   height: 700px;
-  background-color: rgba(0, 0, 0, 1);
 }
 
 .winner-message {
@@ -170,8 +213,7 @@ span {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 35%;
-  padding: 60px 0;
+  padding: 40px 30px;
   text-align:  center;
   border: 2px solid black;
   background-color:  white;
@@ -180,9 +222,19 @@ span {
   }
 }
 
+.winnerText {
+  font-family: 'Cinzel', serif;
+  font-size: 50px;
+  color: #197228;
+}
+
 
 @media (max-width: 1200px) {
   html, body {
     font-size: 14px;
   }
+}
+
+.overlay, .start-menu .card-table {
+
 }

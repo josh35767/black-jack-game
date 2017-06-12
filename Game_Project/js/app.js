@@ -4,9 +4,11 @@ $(document).ready (function(){
   $('.wrap').hide();
   $('.card-table').hide();
   $('#play-button').click(function(){
+    document.getElementById('startShuffle').play();
+    $('.winner-message').show();
+    $('.menu-text').hide();
     $('.wrap').show();
     $('.card-table').show();
-    $('.menu-text').hide();
     theGame.start();
   });
 
@@ -36,7 +38,7 @@ $(document).ready (function(){
   });
 
   $('#stand-btn').click(function (){
-    theGame.dealer.playTurn();
+    theGame.playTurn();
     theGame.player.checkStatus();
     theGame.dealer.showHand();
     $('.card2-1').removeClass('flippedOver');
