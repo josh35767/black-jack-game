@@ -10,80 +10,93 @@
     <link rel='stylesheet' href='css/style.min.css'>
   </head>
   <body>
-    <div class='menu start-menu'>
 
-        <div class='menu-text'>
 
-          <h1>Black Jack </h1>
-          <button id='play-button'> Play </button><br>
-          <button id='instructions'> Instructions </button>
-        </div>
-        <div class='instruction-container'>
-          <h1> Instructions </h1>
-          <h2 class='current-text'></h2>
-          <button id='back'>Back</button>
-          <button id='next'>Next</button><br>
-          <button id='menu'>Back to Menu</button>
-        </div>
-    <div class='wrap overlay'>
-      <div class='winner-message'>
-        <h1> You win! </h1>
 
-      </div>
 
 
     <div class='card-table-edge'>
-    <div class='card-table'>
+      <div class='card-table'>
 
-      <div class='card-hand'>
-        <div class='aCard card-1'></div>
-        <div class='aCard card-2'></div>
-        <div class='aCard card-3'></div>
-        <div class='aCard card-4'></div>
-        <div class='aCard card-5'></div>
-        <div class='aCard card-6'></div>
-        <div class='aCard card-7'></div>
-        <div class='aCard card-8'></div>
-        <div class='aCard card-9'></div>
-        <div class='aCard card-10'></div>
-        <div class='aCard card-11'></div><br>
-        <h1> Your Hand </h1>
+        <div class='card-hand cardsplit-hand'>
+          <div class='aCard card-1'></div>
+          <div class='aCard card-2'></div>
+          <div class='aCard card-3'></div>
+          <div class='aCard card-4'></div>
+          <div class='aCard card-5'></div>
+          <div class='aCard card-6'></div>
+          <div class='aCard card-7'></div>
+          <div class='aCard card-8'></div>
+          <div class='aCard card-9'></div>
+          <div class='aCard card-10'></div>
+          <div class='aCard card-11'></div><br>
+          <h1> Your Hand </h1>
+        </div>
+
+        <div class='card-hand-2'>
+          <h1> Dealer's Hand </h1>
+          <br>
+          <div class='aCard card2-1'></div>
+          <div class='aCard card2-2'></div>
+          <div class='aCard card2-3'></div>
+          <div class='aCard card2-4'></div>
+          <div class='aCard card2-5'></div>
+          <div class='aCard card2-6'></div>
+          <div class='aCard card2-7'></div>
+          <div class='aCard card2-8'></div>
+          <div class='aCard card2-9'></div>
+          <div class='aCard card2-10'></div>
+          <div class='aCard card2-11'></div>
+        </div>
+
+
+        <section class='controls'>
+          <div class = 'totalValue'> </div>
+          <div class = 'status'></div>
+          <button id='hit-btn'> HIT ME </button><br>
+          <button id='double-btn'> DOUBLE DOWN </button><br>
+          <button id='stand-btn'> STAND </button>
+        </section>
+
+        <div id='chips' class='chips'><img src='img/chips.png'></img><br> <p class='chipText'>Chips:<br>$50</p></div>
+
+        <button id='mute'>Toggle Music</button>
+
+        <div class='deckCards'>
+          <div class='aCard'></div>
+          <div class='aCard'></div>
+          <div class='aCard'></div>
+          <div class='aCard'></div>
+          <div class='aCard'></div>
+          <div class='aCard'></div>
+          <div class='aCard'></div>
+          <div class='aCard'></div>
+          <div class='aCard'></div>
+          <div class='aCard'></div>
+          <div class='aCard deckTop'><h3>Deck: <br> 52</h3></div>
       </div>
 
-      <div class='card-hand-2'>
-        <h1> Dealer's Hand </h1>
-        <br>
-        <div class='aCard card2-1'></div>
-        <div class='aCard card2-2'></div>
-        <div class='aCard card2-3'></div>
-        <div class='aCard card2-4'></div>
-        <div class='aCard card2-5'></div>
-        <div class='aCard card2-6'></div>
-        <div class='aCard card2-7'></div>
-        <div class='aCard card2-8'></div>
-        <div class='aCard card2-9'></div>
-        <div class='aCard card2-10'></div>
-        <div class='aCard card2-11'></div>
+
       </div>
-
-
-      <section class='controls'>
-        <div class = 'totalValue'> </div>
-        <div class = 'status'></div>
-        <button id='hit-btn'> HIT ME </button><br>
-        <button id='double-btn'> DOUBLE DOWN </button><br>
-        <button id='stand-btn'> STAND </button>
-
-      </section>
-
-      <div id='chips'> <p>Chips:<br>50<p></div>
-
-      <button id='mute'>Toggle Music</button>
     </div>
-  </div>
+  <div class='menu start-menu'>
+      <div class='menu-text'>
+        <h1>Black Jack </h1>
+        <button id='play-button'> Play </button><br>
+        <button id='instructions'> Instructions </button>
+      </div>
+    <div class='instruction-container'>
+      <h1> Instructions </h1>
+      <h2 class='current-text'></h2>
+      <button id='back'>Back</button>
+      <button id='next'>Next</button><br>
+      <button id='menu'>Back to Menu</button>
+    </div>
 
-     </div>
-   </div>
+  </div>
+      <div class='winner-message'>
+        <h1> You win! </h1>
+      </div>
    <figcaption>Music from: https://www.freesound.org/s/346842</figcaption>
 
      <audio id="instLoop" src="sounds/OpeningMusic.wav"></audio>

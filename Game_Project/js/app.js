@@ -1,16 +1,16 @@
 var theGame = new NewGame();
 
 $(document).ready (function(){
+  $('.aCard').hide();
+  $('.winner-message').hide();
     // $('.instruction-container').hide();
   $('#play-button').click(function(){
+    $('.start-menu').hide();
     $('body').css('user-select', 'none');
     document.getElementById("loopSong").loop = true;
     document.getElementById("loopSong").play();
     document.getElementById('startShuffle').play();
-    $('.winner-message').show();
-    $('.menu-text').hide();
-    $('.wrap').show();
-    $('.card-table').show();
+    $('.menu').hide();
     theGame.start();
   });
   // OPENS INSTRUCTIONS MENU AND KEEPS TRACK OF WHAT INSTRUCTION YOU'RE ON

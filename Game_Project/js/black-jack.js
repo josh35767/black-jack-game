@@ -22,6 +22,15 @@ NewGame.prototype.initialDeal = function () {
     this.dealer.totalPoints += someCardDealer.pointValue;
     this.dealer.hand.push(someCardDealer);
   }
+  $('.deckTop').html('<h3>Deck: <br>' + this.countDeck() + '</h3>');
+};
+
+NewGame.prototype.countDeck = function () {
+  var totalCards = 0;
+  this.deck.suits.forEach(function(suit){
+    totalCards += suit.values.length;
+  });
+  return totalCards;
 };
 
 //Adds a card to the players hands
@@ -34,6 +43,7 @@ NewGame.prototype.playerHit = function () {
     this.player.totalPoints += someCard2.pointValue;
     this.player.hand.push(someCard2);
     this.player.checkAces();
+    $('.deckTop').html('<h3>Deck: <br>' + this.countDeck() + '</h3>');
     theGame.player.checkStatus();
     theGame.player.showHand();
 };
@@ -47,16 +57,23 @@ NewGame.prototype.dealerHit = function () {
   this.dealer.totalPoints += someCard2.pointValue;
   this.dealer.hand.push(someCard2);
   this.dealer.checkAces();
+  $('.deckTop').html('<h3>Deck: <br>' + this.countDeck() + '</h3>');
 
 };
 // DOUBLE DOWN FUNCTION
 NewGame.prototype.doubleDown = function () {
-  if (this.player.totalPoints >= this.dealer.totalPoints || this.dealer.totalPoints > 21 ) {
+  if (this.player.totalPoints > this.dealer.totalPoints || this.dealer.totalPoints > 21 ) {
     setTimeout(function (){
         document.getElementById('winAudio').play();
     }, 1000);
     this.player.chips += 10;
     return 'You win the round.';
+  }
+  else if (this.player.totalPoints === this.dealer.totalPoints) {
+    setTimeout(function (){
+        document.getElementById('winAudio').play();
+    }, 1000);
+    return 'Tie, bets are returned.';
   }
   else {
     setTimeout(function (){
@@ -69,12 +86,18 @@ NewGame.prototype.doubleDown = function () {
 
 // Checks is the Dealer has a higher score than the player
 NewGame.prototype.checkWinner = function () {
-  if (this.player.totalPoints >= this.dealer.totalPoints || this.dealer.totalPoints > 21 ) {
+  if (this.player.totalPoints > this.dealer.totalPoints || this.dealer.totalPoints > 21 ) {
     setTimeout(function (){
         document.getElementById('winAudio').play();
     }, 1000);
     this.player.chips += 5;
     return 'You win the round.';
+  }
+  else if(this.player.totalPoints == this.dealer.totalPoints) {
+    setTimeout(function (){
+        document.getElementById('winAudio').play();
+    }, 1000);
+    return 'Tie, bets are returned.';
   }
   else {
     setTimeout(function (){
@@ -95,7 +118,7 @@ NewGame.prototype.start = function() {
   this.dealer.showHand();
   this.checkBlackJack();
 };
-
+// Checks for a black jack/ natural
 NewGame.prototype.checkBlackJack = function () {
   if (this.player.totalPoints === 21) {
     setTimeout(function (){
@@ -103,7 +126,7 @@ NewGame.prototype.checkBlackJack = function () {
     }, 2000);
     this.player.chips += 5;
     $('.controls button').css('pointer-events', 'none');
-    $('.winner-message').html('<h1>Black Jack! You win the round!</h1>');
+    $('.winner-message').html('<h1>Black Jack!<br> You win the round!</h1>');
     setTimeout(function(){
       theGame.displayMessage();
     }, 2000);
@@ -125,13 +148,15 @@ NewGame.prototype.checkBlackJack = function () {
   }
 };
 
+var gameOver = false;
+// Checks if the player has above 100chips or above or is out of chip
 NewGame.prototype.checkGameOver = function () {
   if (this.player.chips >= 100) {
     document.getElementById("loopSong").pause();
     document.getElementById('gameWin').play();
     $('.winner-message').html('<h1 class="winnerText">Congratulations! <br> You beat the dealer.<br> Resetting the game! <h1>');
-    $('.wrap').addClass('winBackground');
     this.displayMessage();
+    gameOver = true;
     setTimeout(function(){
         location.reload();
     },7000);
@@ -141,6 +166,7 @@ NewGame.prototype.checkGameOver = function () {
     document.getElementById('gameOver').play();
     $('.winner-message').html('<h1>Sorry <br> You\'re out of chips <br> Resetting the game! <h1>');
     this.displayMessage();
+    gameOver = true;
     setTimeout(function(){
         location.reload();
     },5000);
@@ -148,40 +174,42 @@ NewGame.prototype.checkGameOver = function () {
 };
 
 
-// Resets Game
+// Resets Game and any CSS changes, such as overlapping cards
 NewGame.prototype.reset = function (){
   this.player.totalPoints = 0;
   this.player.hand = [];
   this.player.status = 'Hit or Stand?';
   this.player.totalPoints = 0;
   this.player.aces = 0;
+  if (this.countDeck() < 15) {
+    this.deck = new CardDeck();
+    document.getElementById('startShuffle').play();
+  }
   this.dealer = new Dealer ();
-  this.deck = new CardDeck ();
   this.checkGameOver();
   $('#double-btn').css('visibility', 'visible');
-  $('.aCard').css('margin-left', '0');
-  $('.card-1').css('margin-left', '0');
+  $('.card-hand-2 .aCard ').css('margin-left', '0');
+  $('.card-hand .aCard ').css('margin-left', '0');
   $('.aCard').removeClass('overlap');
   $('.aCard').removeClass('red');
-  $('.menu').removeClass('start-menu');
+  $('.start-menu').hide();
   $('.card2-1').removeClass('flippedOver');
   $('.controls button').css('pointer-events', 'auto');
 };
-
+//Displays text for win message
 
 NewGame.prototype.displayMessage = function () {
-  $('.wrap').addClass('overlay');
-  $('.card-table').hide();
-  $('.card-table-edge').hide();
+  $('.start-menu').show();
+  $('.menu-text').hide();
   $('.winner-message').show();
   setTimeout (function (){
-      $('.card-table').show();
-      $('.card-table-edge').show();
-    $('.wrap').removeClass('overlay');
     $('.winner-message').hide();
 
     theGame.reset ();
-    theGame.start ();
+    if (!gameOver) {
+      theGame.start ();
+    }
+
   }, 2000);
 
 };
@@ -270,7 +298,11 @@ Player.prototype.checkAces = function (){
   }
 };
 
-// PERSON IS THE PERSON PLAYING THE GAME
+
+
+//----------- PERSON IS THE PERSON PLAYING THE GAME
+
+
 function Person () {
   Player.call(this);
   this.chips = 50;
@@ -284,6 +316,7 @@ var cardPosition = 0;
 Person.prototype.showHand = function () {
   $('.card-hand .aCard').html('');
   $('.card-hand .aCard').hide();
+  $('.deckCards .aCard').show();
   this.hand.forEach(function (card) {
     cardPosition += 1;
     if (cardPosition > 3) {
@@ -301,13 +334,18 @@ Person.prototype.showHand = function () {
     '</span><br><span class="suitPic">&' + card.cardSuit + ';');
     $('.card-'+cardPosition).show();
     });
-  $('#chips').html('<p>Chips:<br> ' + '$' + this.chips + '</p>');
+  $('.chipText').html('Chips:<br> ' + '$' + this.chips);
+
   $('.totalValue').html('Total Value: ' + this.totalPoints);
   $('.status').html(this.status);
   cardPosition = 0;
 };
 
-// CREATES A DEALER
+
+
+// --------------- CREATES A DEALER --------------------
+
+
 function Dealer () {
   Player.call(this);
 }
@@ -343,6 +381,11 @@ Dealer.prototype.showHand = function() {
     });
     cardPosition = 0;
 };
+
+
+//-------------------------------
+
+
 // Array for the instruction text
 var instructions = [
   "Welcome to Black Jack, for those who don't know how to play, the rules are simple.",
@@ -356,3 +399,9 @@ var instructions = [
   "The goal is to get to $100 in chips, reach 0 and game over.",
   "Good luck!"
 ];
+
+function changeBackground (){
+  setInterval (function(
+
+  ){}, 1000);
+}
