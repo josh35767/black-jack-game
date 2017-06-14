@@ -187,6 +187,7 @@ NewGame.prototype.reset = function (){
   }
   this.dealer = new Dealer ();
   this.checkGameOver();
+  $('.winner-message').removeClass('busted');
   $('#double-btn').css('visibility', 'visible');
   $('.card2-1').css('margin-left', '0');
   $('.card-1').css('margin-left', '0');
@@ -321,7 +322,7 @@ Person.prototype.showHand = function () {
   this.hand.forEach(function (card) {
     cardPosition += 1;
     if (cardPosition > 3) {
-      $('card-hand .aCard').removeClass('last');
+      $('.card-hand .aCard').removeClass('last');
       $('.card-1').css('margin-left', '50px');
       $('.card-hand .aCard').addClass('overlap');
       $('.card-'+cardPosition).addClass('last');
@@ -386,8 +387,14 @@ Dealer.prototype.showHand = function() {
 
 
 //-------------------------------
-
-
+// Adds subtle sound and animation for clicking
+function clickLook (reference) {
+$(reference).addClass('clicked');
+document.getElementById('clickSound').play();
+setTimeout(function(){
+  $('button').removeClass('clicked');
+}, 50);
+}
 // Array for the instruction text
 var instructions = [
   "Welcome to Black Jack, for those who don't know how to play, the rules are simple.",

@@ -5,6 +5,7 @@ $(document).ready (function(){
   $('.winner-message').hide();
     // $('.instruction-container').hide();
   $('#play-button').click(function(){
+    clickLook(this);
     $('.start-menu').hide();
     $('body').css('user-select', 'none');
     document.getElementById("loopSong").loop = true;
@@ -26,6 +27,7 @@ $(document).ready (function(){
   });
 // BACK BUTTON FOR INSTRUCTIONS
   $('#back').click(function(){
+    clickLook(this);
     instructionIndex -= 1;
     $('#next').show();
     $('.current-text').html(instructions[instructionIndex]);
@@ -35,6 +37,7 @@ $(document).ready (function(){
   });
 // NEXT BUTTON FOR INSTRUCTIONS
   $('#next').click(function(){
+    clickLook(this);
     $('#back').show();
     instructionIndex += 1;
     $('.current-text').html(instructions[instructionIndex]);
@@ -44,6 +47,7 @@ $(document).ready (function(){
   });
 // Takes you back to main menu from instructions
   $('#menu').click (function() {
+    clickLook(this);
     $('.instruction-container').hide();
     $('.menu-text').show();
     document.getElementById("instLoop").pause();
@@ -54,6 +58,7 @@ $(document).ready (function(){
 // Deals with "hits"
 
   $('#hit-btn').click(function (){
+    clickLook(this);
     document.getElementById('audio').play();
     theGame.playerHit();
     $('#double-btn').css('visibility', 'hidden');
@@ -74,6 +79,7 @@ $(document).ready (function(){
   });
 // Deals with the stand button
   $('#stand-btn').click(function (){
+    clickLook(this);
     theGame.dealer.playTurn();
     theGame.player.checkStatus();
     theGame.dealer.showHand();
@@ -86,6 +92,7 @@ $(document).ready (function(){
   });
 // Deals with Double Down Operations
   $('#double-btn').click(function() {
+    clickLook(this);
     document.getElementById('audio').play();
     theGame.playerHit();
     theGame.dealer.showHand();
@@ -114,6 +121,7 @@ $(document).ready (function(){
 // Togles mute of music
   var isMuted = false;
   $('#mute').click(function(){
+    clickLook(this);
     if(isMuted ) {
       document.getElementById("loopSong").play();
       isMuted = false;
