@@ -24,7 +24,7 @@ NewGame.prototype.initialDeal = function () {
   }
   $('.deckTop').html('<h3>Deck: <br>' + this.countDeck() + '</h3>');
 };
-
+//Keeps
 NewGame.prototype.countDeck = function () {
   var totalCards = 0;
   this.deck.suits.forEach(function(suit){

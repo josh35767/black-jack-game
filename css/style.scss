@@ -349,6 +349,8 @@ span {
 
 @media (max-width: 800px) {
   html, body {
+    overflow-y:hidden;
+    height: 100%;
     font-size: 8px;
   }
   .chips img {
@@ -387,7 +389,7 @@ span {
   }
 
 }
-
+// Allows only landscape orientation
 @media screen and (orientation: portrait) {
    .everything { display: none; }
    .orientationMessage {
