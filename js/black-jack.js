@@ -188,9 +188,10 @@ NewGame.prototype.reset = function (){
   this.dealer = new Dealer ();
   this.checkGameOver();
   $('#double-btn').css('visibility', 'visible');
-  $('.card-hand-2 .aCard ').css('margin-left', '0');
-  $('.card-hand .aCard ').css('margin-left', '0');
+  $('.card2-1').css('margin-left', '0');
+  $('.card-1').css('margin-left', '0');
   $('.aCard').removeClass('overlap');
+  $('.aCard').removeClass('last');
   $('.aCard').removeClass('red');
   $('.start-menu').hide();
   $('.card2-1').removeClass('flippedOver');
@@ -320,6 +321,7 @@ Person.prototype.showHand = function () {
   this.hand.forEach(function (card) {
     cardPosition += 1;
     if (cardPosition > 3) {
+      $('card-hand .aCard').removeClass('last');
       $('.card-1').css('margin-left', '50px');
       $('.card-hand .aCard').addClass('overlap');
       $('.card-'+cardPosition).addClass('last');
@@ -365,10 +367,10 @@ Dealer.prototype.showHand = function() {
     cardPosition += 1;
     $('.card2-1').addClass('flippedOver');
     if (cardPosition > 3) {
-      $('.card-hand-2 .aCard').css('margin-left', '-100px');
+      $('.card-hand-2 .aCard').removeClass('last');
       $('.card2-1').css('margin-left', '50px');
       $('.card-hand-2 .aCard').addClass('overlap');
-      $('.card2-'+cardPosition).removeClass('overlap');
+      $('.card2-'+cardPosition).addClass('last');
     }
     if (card.cardSuit === 'diams' || card.cardSuit === 'hearts'){
       $('.card2-'+cardPosition).addClass('red');

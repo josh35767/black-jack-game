@@ -164,18 +164,6 @@ span {
   color: black;
 }
 
-.overlap {
-  margin-left: -100px;
-  span {
-    margin-right: 50%;
-  }
-}
-
-.last {
-  span{
-    margin-right: 0;
-  }
-}
 
 
 .controls {
@@ -307,6 +295,20 @@ span {
     }
   }
 }
+
+
+.overlap {
+  margin-left: -100px;
+  span {
+    margin-right: 50%;
+  }
+}
+
+.last {
+  span{
+    margin-right: 0;
+  }
+}
 @media (max-width: 1200px) {
   html, body {
     font-size: 12px;
@@ -373,6 +375,7 @@ span {
     font-size: 3.5rem;
   }
   .overlap {
+    margin-left: -40px;
     span {
       margin-right: 30%;
     }
