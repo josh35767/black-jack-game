@@ -320,10 +320,10 @@ Person.prototype.showHand = function () {
   this.hand.forEach(function (card) {
     cardPosition += 1;
     if (cardPosition > 3) {
-      $('.card-hand .aCard').css('margin-left', '-100px');
       $('.card-1').css('margin-left', '50px');
       $('.card-hand .aCard').addClass('overlap');
-      $('.card-'+cardPosition).removeClass('overlap');
+      $('.card-'+cardPosition).addClass('last');
+
     }
     if (card.cardSuit === 'diams' || card.cardSuit === 'hearts'){
       $('.card-'+cardPosition).addClass('red');
