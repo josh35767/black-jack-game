@@ -75,7 +75,7 @@ NewGame.prototype.checkWinner = function (betAmount) {
   }
   else if(this.player.totalPoints == this.dealer.totalPoints) {
     setTimeout(function (){
-        document.getElementById('winAudio').play();
+        document.getElementById('tie').play();
     }, 1000);
     return 'Tie, bets are returned.';
   }
@@ -134,6 +134,7 @@ NewGame.prototype.checkGameOver = function () {
   if (this.player.chips >= 100) {
     document.getElementById("loopSong").pause();
     document.getElementById('gameWin').play();
+    $('.winner-message').addClass('backgroundWin');
     $('.winner-message').html('<h1 class="winnerText">Congratulations! <br> You beat the dealer.<br> Resetting the game! <h1>');
     this.displayMessage();
     gameOver = true;

@@ -81,9 +81,10 @@ h1 {
   position: relative;
   margin: 0 auto;
   padding: 0;
-  width: 90%;
+  width: 92%;
   height: 650px;
-  border: 3px solid black;
+  border: 2px solid black;
+  border-top: 0;
   border-bottom-left-radius: 400px;
   border-bottom-right-radius: 400px;
 
@@ -92,10 +93,9 @@ h1 {
 
 .card-table-edge {
   background-image: url('../img/wood.jpg');
-  border: 3px solid black;
   border-bottom-left-radius: 400px;
   border-bottom-right-radius: 400px;
-  width: 90%;
+  width: 95%;
   max-width: 1500px;
   margin: 0 auto;
   height: 700px;
@@ -151,7 +151,7 @@ span {
   color: black;
   display: inline-block;
   background-color: white;
-  border: 1.5px solid black;
+  border: 1.2px solid black;
   border-radius: 5px;
   width: 15%;
   min-width: 150px;
@@ -213,7 +213,7 @@ span {
   left: 5%;
   img {
     width: 12em;
-
+    margin-bottom: 5px;
   }
   p {
     font-family:'Cinzel', serif;
@@ -254,7 +254,13 @@ span {
 
 .winnerText {
   font-family: 'Cinzel', serif;
-  color: #197228;
+  color: #004f13;
+}
+
+.backgroundWin {
+  background-image: url("../img/win.png");
+  background-size: cover;
+  background-position: center;
 }
 
 #mute {
@@ -264,8 +270,7 @@ span {
   color: white;
   padding: 0.5%;
   font-size: 1.5em;
-  border: 2px outset black;
-  border-radius: 5px;
+  border: 2px outset white;
   background-image: linear-gradient(#a80101, #ef4a4a);
 }
 
