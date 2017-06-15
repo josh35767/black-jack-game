@@ -1,5 +1,5 @@
 html, body {
-  background-image: linear-gradient(black, #373837);
+  background-color: black;
  //Disables text highlight
   margin: 0;
   padding: 0;
@@ -12,14 +12,14 @@ html, body {
   font-size: 50px;
   text-align: center;
 }
-.start-menu { // Sldo provides grey overlay
+.start-menu { // provides grey overlay
   position: absolute;
   text-align: center;
   top: 0;
   box-sizing: content-box;
   width: 100%;
   margin: 0 auto;
-  height: 700px;
+  height: 720px;
   border: 5px;
   background-color: rgba(0,0,0,0.8);;
   h3 {
@@ -235,24 +235,6 @@ span {
   span {
     visibility: hidden;
   }
-}
-
-.overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-
-}
-
-.winBackground {
-  background-image: url('../img/winImg.jpg');
-  background-size: cover;
-}
-
-.wrap  {
-
-  margin: 0 auto;
-  padding: 0;
-  width: 100%;
-  height: 700px;
 }
 
 .winner-message {

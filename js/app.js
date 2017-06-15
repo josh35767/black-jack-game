@@ -60,8 +60,8 @@ $(document).ready (function(){
   $('#hit-btn').click(function (){
     clickLook(this);
     document.getElementById('audio').play();
-    theGame.playerHit();
     $('#double-btn').css('visibility', 'hidden');
+    theGame.playerHit();
     theGame.dealer.showHand();
     if (theGame.player.totalPoints > 21) {
       $('.controls button').css('pointer-events', 'none');
@@ -85,7 +85,7 @@ $(document).ready (function(){
     theGame.dealer.showHand();
     $('.card2-1').removeClass('flippedOver');
     $('.controls button').css('pointer-events', 'none');
-    $('.winner-message').html('<h1>' + theGame.checkWinner()+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
+    $('.winner-message').html('<h1>' + theGame.checkWinner(5)+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
     setTimeout(function(){
       theGame.displayMessage();
     }, 1000);
@@ -111,7 +111,7 @@ $(document).ready (function(){
         $('.card2-1').removeClass('flippedOver');
         $('.controls button').css('pointer-events', 'none');
         setTimeout(function (){
-        $('.winner-message').html('<h1>' + theGame.doubleDown()+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
+        $('.winner-message').html('<h1>' + theGame.checkWinner(10)+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
         setTimeout(function(){
           theGame.displayMessage();
         }, 1000);

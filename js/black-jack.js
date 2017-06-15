@@ -1,3 +1,5 @@
+// GAME PROTOCOLS
+
 function NewGame () {
   this.deck = new CardDeck();
   this.player = new Person ();
@@ -24,7 +26,7 @@ NewGame.prototype.initialDeal = function () {
   }
   $('.deckTop').html('<h3>Deck: <br>' + this.countDeck() + '</h3>');
 };
-//Keeps
+//Keeps track of cards left in deck
 NewGame.prototype.countDeck = function () {
   var totalCards = 0;
   this.deck.suits.forEach(function(suit){
@@ -36,12 +38,12 @@ NewGame.prototype.countDeck = function () {
 //Adds a card to the players hands
 
 NewGame.prototype.playerHit = function () {
-    var someCard2 = this.deck.randomCard();
-    if (someCard2.faceValue === 'A') {
+    var someCard = this.deck.randomCard();
+    if (someCard.faceValue === 'A') {
       this.player.aces += 1;
     }
-    this.player.totalPoints += someCard2.pointValue;
-    this.player.hand.push(someCard2);
+    this.player.totalPoints += someCard.pointValue;
+    this.player.hand.push(someCard);
     this.player.checkAces();
     $('.deckTop').html('<h3>Deck: <br>' + this.countDeck() + '</h3>');
     theGame.player.checkStatus();
@@ -50,47 +52,25 @@ NewGame.prototype.playerHit = function () {
 
 //ADDS A CARD TO THE DEALERS HAND
 NewGame.prototype.dealerHit = function () {
-  var someCard2 = this.deck.randomCard();
-  if (someCard2.faceValue === 'A') {
+  var someCard = this.deck.randomCard();
+  if (someCard.faceValue === 'A') {
     this.dealer.aces += 1;
   }
-  this.dealer.totalPoints += someCard2.pointValue;
-  this.dealer.hand.push(someCard2);
+  this.dealer.totalPoints += someCard.pointValue;
+  this.dealer.hand.push(someCard);
   this.dealer.checkAces();
   $('.deckTop').html('<h3>Deck: <br>' + this.countDeck() + '</h3>');
 
 };
-// DOUBLE DOWN FUNCTION
-NewGame.prototype.doubleDown = function () {
-  if (this.player.totalPoints > this.dealer.totalPoints || this.dealer.totalPoints > 21 ) {
-    setTimeout(function (){
-        document.getElementById('winAudio').play();
-    }, 1000);
-    this.player.chips += 10;
-    return 'You win the round.';
-  }
-  else if (this.player.totalPoints === this.dealer.totalPoints) {
-    setTimeout(function (){
-        document.getElementById('winAudio').play();
-    }, 1000);
-    return 'Tie, bets are returned.';
-  }
-  else {
-    setTimeout(function (){
-        document.getElementById('loseAudio').play();
-    }, 1000);
-    this.player.chips -= 10;
-    return 'You lose the round.';
-  }
-};
 
-// Checks is the Dealer has a higher score than the player
-NewGame.prototype.checkWinner = function () {
+
+// Checks is the Dealer has a higher score than the player (Accepts bet Amount for double down vs regular play)
+NewGame.prototype.checkWinner = function (betAmount) {
   if (this.player.totalPoints > this.dealer.totalPoints || this.dealer.totalPoints > 21 ) {
     setTimeout(function (){
         document.getElementById('winAudio').play();
     }, 1000);
-    this.player.chips += 5;
+    this.player.chips += betAmount;
     return 'You win the round.';
   }
   else if(this.player.totalPoints == this.dealer.totalPoints) {
@@ -103,7 +83,7 @@ NewGame.prototype.checkWinner = function () {
     setTimeout(function (){
         document.getElementById('loseAudio').play();
     }, 1000);
-    this.player.chips -= 5;
+    this.player.chips -= betAmount;
     return 'You lose the round.';
   }
 };
@@ -120,7 +100,7 @@ NewGame.prototype.start = function() {
 };
 // Checks for a black jack/ natural
 NewGame.prototype.checkBlackJack = function () {
-  if (this.player.totalPoints === 21) {
+  if (this.player.totalPoints === 21) {     // If Players first deal is 21, player wins by default
     setTimeout(function (){
         document.getElementById('winAudio').play();
     }, 2000);
@@ -131,7 +111,7 @@ NewGame.prototype.checkBlackJack = function () {
       theGame.displayMessage();
     }, 2000);
   }
-  else if(this.dealer.totalPoints === 21) {
+  else if(this.dealer.totalPoints === 21) { //If dealers first deal is 21, dealer wins.
     setTimeout(function (){
         $('.card2-1').removeClass('flippedOver');
     },1000);
@@ -162,7 +142,7 @@ NewGame.prototype.checkGameOver = function () {
     },7000);
   }
   else if (this.player.chips <= 0) {
-      document.getElementById("loopSong").pause();
+    document.getElementById("loopSong").pause();
     document.getElementById('gameOver').play();
     $('.winner-message').html('<h1>Sorry <br> You\'re out of chips <br> Resetting the game! <h1>');
     this.displayMessage();
@@ -178,7 +158,6 @@ NewGame.prototype.checkGameOver = function () {
 NewGame.prototype.reset = function (){
   this.player.totalPoints = 0;
   this.player.hand = [];
-  this.player.status = 'Hit or Stand?';
   this.player.totalPoints = 0;
   this.player.aces = 0;
   if (this.countDeck() < 15) {
@@ -186,17 +165,14 @@ NewGame.prototype.reset = function (){
     document.getElementById('startShuffle').play();
   }
   this.dealer = new Dealer ();
-  this.checkGameOver();
-  $('.winner-message').removeClass('busted');
+  this.player.showHand();
   $('#double-btn').css('visibility', 'visible');
-  $('.card2-1').css('margin-left', '0');
-  $('.card-1').css('margin-left', '0');
-  $('.aCard').removeClass('overlap');
-  $('.aCard').removeClass('last');
-  $('.aCard').removeClass('red');
+  $('.card2-1, .card-1').css('margin-left', '0');
+  $('.aCard').removeClass('overlap last red');
   $('.start-menu').hide();
   $('.card2-1').removeClass('flippedOver');
   $('.controls button').css('pointer-events', 'auto');
+  this.checkGameOver();
 };
 //Displays text for win message
 
@@ -216,7 +192,7 @@ NewGame.prototype.displayMessage = function () {
 
 };
 
-// ---------------------------------------
+// ---------------------CARDS------------------
 
 // CONSTRUCTOR FUNCTION FOR EACH SUIT
 function SuitObject (suitName, color) {
@@ -269,7 +245,7 @@ function checkPointValue (value) {
   }
 }
 
-// --------------------------------
+// -----------------APPLIES TO BOTH PLAYER AND DEALER---------------
 
 //KEEPS TRACK OF THE PLAYERS POINTS AND CARDS IN HAND
 
@@ -386,14 +362,16 @@ Dealer.prototype.showHand = function() {
 };
 
 
-//-------------------------------
+//----------MISC---------------------
+
+
 // Adds subtle sound and animation for clicking
 function clickLook (reference) {
-$(reference).addClass('clicked');
-document.getElementById('clickSound').play();
-setTimeout(function(){
-  $('button').removeClass('clicked');
-}, 50);
+  $(reference).addClass('clicked');
+  document.getElementById('clickSound').play();
+  setTimeout(function(){
+    $('button').removeClass('clicked');
+  }, 50);
 }
 // Array for the instruction text
 var instructions = [
@@ -408,9 +386,3 @@ var instructions = [
   "The goal is to get to $100 in chips, reach 0 and game over.",
   "Good luck!"
 ];
-
-function changeBackground (){
-  setInterval (function(
-
-  ){}, 1000);
-}
