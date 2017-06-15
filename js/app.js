@@ -2,6 +2,7 @@ var theGame = new NewGame();
 
 $(document).ready (function(){
   $('.aCard').hide();
+  $('.error').hide();
   $('.winner-message').hide();
     // $('.instruction-container').hide();
   $('#play-button').click(function(){
