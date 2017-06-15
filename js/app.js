@@ -98,7 +98,7 @@ $(document).ready (function(){
     theGame.dealer.showHand();
     $('.card2-1').removeClass('flippedOver');
     $('.controls button').css('pointer-events', 'none');
-    $('.winner-message').html('<h1>' + theGame.checkWinner(100)+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
+    $('.winner-message').html('<h1>' + theGame.checkWinner(5)+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
     setTimeout(function(){
       theGame.displayMessage();
     }, 1000);
