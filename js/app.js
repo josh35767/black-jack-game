@@ -5,6 +5,17 @@ $(document).ready (function(){
   $('.winner-message').hide();
     // $('.instruction-container').hide();
   $('#play-button').click(function(){
+    var name = $("#name").val();
+    if (name.length > 15) {
+      $(".error").show();
+      return;
+    }
+    else if (name.length === 0) {
+      $('.playerName').html("Your Hand");
+    }
+    else {
+      $('.playerName').html(name +"'s Hand");
+    }
     clickLook(this);
     $('.start-menu').hide();
     $('body').css('user-select', 'none');
@@ -13,6 +24,7 @@ $(document).ready (function(){
     document.getElementById('startShuffle').play();
     $('.menu').hide();
     theGame.start();
+
   });
   // OPENS INSTRUCTIONS MENU AND KEEPS TRACK OF WHAT INSTRUCTION YOU'RE ON
   var instructionIndex = 0;
@@ -85,7 +97,7 @@ $(document).ready (function(){
     theGame.dealer.showHand();
     $('.card2-1').removeClass('flippedOver');
     $('.controls button').css('pointer-events', 'none');
-    $('.winner-message').html('<h1>' + theGame.checkWinner(5)+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
+    $('.winner-message').html('<h1>' + theGame.checkWinner(100)+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
     setTimeout(function(){
       theGame.displayMessage();
     }, 1000);
@@ -131,6 +143,5 @@ $(document).ready (function(){
       isMuted = true;
     }
   });
-
 
 });
