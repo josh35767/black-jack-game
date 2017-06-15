@@ -1,5 +1,5 @@
 html, body {
-  background-color: black;
+  background-image: linear-gradient(black, #373837);
  //Disables text highlight
   margin: 0;
   padding: 0;
@@ -62,6 +62,10 @@ html, body {
   }
 }
 
+h1 {
+  border-radius: 3px;
+}
+
 .instruction-container {
   display: none;
   h1 {
@@ -88,6 +92,7 @@ html, body {
 
 .card-table-edge {
   background-image: url('../img/wood.jpg');
+  border: 3px solid black;
   border-bottom-left-radius: 400px;
   border-bottom-right-radius: 400px;
   width: 90%;
@@ -208,6 +213,7 @@ span {
   left: 5%;
   img {
     width: 12em;
+
   }
   p {
     font-family:'Cinzel', serif;
@@ -305,10 +311,12 @@ span {
 
 .clicked {
   filter: brightness(50%);
-  border-width: 1px;
 }
 
-button:focus {outline:0;}
+button:focus {
+  outline:0;
+}
+
 
 .overlap {
   margin-left: -100px;
