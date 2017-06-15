@@ -392,6 +392,12 @@ button:focus {
   }
 
 }
+
+@media (max-width: 600px) {
+  html, body {
+    font-size: 6.7px;
+  }
+}
 // Allows only landscape orientation
 @media screen and (orientation: portrait) {
    .everything { display: none; }
