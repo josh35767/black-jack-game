@@ -77,7 +77,7 @@ $(document).ready (function(){
     theGame.playerHit();
     theGame.dealer.showHand();
     if (theGame.player.totalPoints > 21) {
-      $('.controls button').css('pointer-events', 'none');
+      $('.controls button').prop('disabled', true);
       theGame.player.chips -= 5;
       setTimeout(function () {
         theGame.player.showHand();
@@ -97,7 +97,7 @@ $(document).ready (function(){
     theGame.player.checkStatus();
     theGame.dealer.showHand();
     $('.card2-1').removeClass('flippedOver');
-    $('.controls button').css('pointer-events', 'none');
+    $('.controls button').prop('disabled', true);
     $('.winner-message').html('<h1>' + theGame.checkWinner(5)+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
     setTimeout(function(){
       theGame.displayMessage();
@@ -110,7 +110,7 @@ $(document).ready (function(){
     theGame.playerHit();
     theGame.dealer.showHand();
     if (theGame.player.totalPoints > 21) {
-      $('.controls button').css('pointer-events', 'none');
+      $('.controls button').prop('disabled', true);
       theGame.player.chips -= 10;
       setTimeout(function () {
         document.getElementById('loseAudio').play();
@@ -122,7 +122,7 @@ $(document).ready (function(){
         theGame.dealer.playTurn();
         theGame.dealer.showHand();
         $('.card2-1').removeClass('flippedOver');
-        $('.controls button').css('pointer-events', 'none');
+        $('.controls button').prop('disabled', true);
         setTimeout(function (){
         $('.winner-message').html('<h1>' + theGame.checkWinner(10)+'<br><br>Dealer\'s Score: ' + theGame.dealer.totalPoints + '</h1>');
         setTimeout(function(){

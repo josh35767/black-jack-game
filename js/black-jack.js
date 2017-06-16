@@ -105,7 +105,7 @@ NewGame.prototype.checkBlackJack = function () {
         document.getElementById('winAudio').play();
     }, 2000);
     this.player.chips += 5;
-    $('.controls button').css('pointer-events', 'none');
+    $('.controls button').prop('disabled', true);
     $('.winner-message').html('<h1>Black Jack!<br> You win the round!</h1>');
     setTimeout(function(){
       theGame.displayMessage();
@@ -120,7 +120,7 @@ NewGame.prototype.checkBlackJack = function () {
         document.getElementById('loseAudio').play();
     }, 3000);
     this.player.chips -= 5;
-    $('.controls button').css('pointer-events', 'none');
+    $('.controls button').prop('disabled', true);
     $('.winner-message').html('<h1>Dealer\'s got a Black Jack... </br> Sorry </h1>');
     setTimeout(function(){
       theGame.displayMessage();
@@ -172,7 +172,7 @@ NewGame.prototype.reset = function (){
   $('.aCard').removeClass('overlap last red');
   $('.start-menu').hide();
   $('.card2-1').removeClass('flippedOver');
-  $('.controls button').css('pointer-events', 'auto');
+  $(':button').prop('disabled', false);
   this.checkGameOver();
 };
 //Displays text for win message
